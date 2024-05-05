@@ -59,7 +59,4 @@ app.use('/products', productRoutes);
 // you need to be authenticated
 app.use('/users', checkAuth,  userRoutes);
 
-
-
-
 module.exports = app;

@@ -1,14 +1,4 @@
-# sequelize-jwt-expressjs
-an implementation of JWT authentication on Node js, using sequelize as on ORM and mysql as a database.
+# Elite RH
+L’application Elite HR est une application Web destinée aux Responsables RH de l’entreprise Elite Audit spécialisée dans l’audit financier. C’est une application web en interne, accessible uniquement aux Responsables RH qui ont besoin de se former afin de monter en compétences dans le domaine du droit du travail et en Management RH. La fonctionalité principale est de visulaiser et d'effectuer des réservations de formation.
+ 
 
-
-Clone the project, don't forget to run npm install before npm start. 
-
-If you don't have node js, download it from here : 
-
-https://nodejs.org/en/download/
-
-
-Download xampp from here : 
-
-https://www.apachefriends.org/fr/index.html
