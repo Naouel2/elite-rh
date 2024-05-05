@@ -13,11 +13,11 @@ const database = new Sequelize(process.env.DB_URL, {
   dialectModule: require('mysql2')
 });
 
-// Relations Utilisateur-Roles
+// Relations Utilisateur-Roles :
 Utilisateur.belongsToMany(RoleUtilisateur, { through: 'Detenir', foreignKey: 'id_utilisateur' });
 RoleUtilisateur.belongsToMany(Utilisateur, { through: 'Detenir', foreignKey: 'id_role_utilisateur' });
 
-// Relations pour Reservation
+// Relations pour Reservation :
 Reservation.belongsTo(Utilisateur, { foreignKey: 'id_utilisateur' });
 Reservation.belongsTo(Formateur, { foreignKey: 'id_formateur' });
 Reservation.belongsTo(Salle, { foreignKey: 'id_salle' });
