@@ -1,17 +1,7 @@
 const express = require('express');
-const router = express.Router();
-const Utilisateur = require('../config/index').Utilisateur;
+const userRoutes = express.Router();
+const userController = require('../controllers/utilisateurControllers');
 
-const getAllUsers = async () => {
-    return await Utilisateur.findAll();
-};
+userRoutes.get('/', userController.getAllUsers);
 
-router.get('/', function(req, res) {
-    getAllUsers().then(user => res.json(user));
-});
-
-
-
-module.exports = router;
-
-
+module.exports = userRoutes;

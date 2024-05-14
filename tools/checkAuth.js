@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 
+//RENOMMER LE DOSSIER "MIDDLEWARE"
 
 // don't forget to add a secret KEY
 const secretKey = process.env.SECRET_KEY || 'secret' ;
