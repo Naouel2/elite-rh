@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const db = require('./config/database');
 const sequelize = require('./config/index').sequelize;
-const checkAuth = require('./tools/checkAuth');
+const checkAuth = require('./middleware/checkAuth');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 const passport = require('passport');
@@ -38,10 +38,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // use the strategy (appliquer les restrictions du jeton)
 passport.use("strategy" , strategy);
 
-//Définir les routes non protégées (en étant non connecté)
+// Définir les routes non protégées (en étant non connecté)
 app.use('/auth', authRoutes);
 
 // you need to be authenticated
-app.use('/users', checkAuth,  userRoutes);
+app.use('/users', checkAuth, userRoutes);
 
 module.exports = app;

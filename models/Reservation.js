@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../config/database');
 
 // Création du modèle Réservation
-const Reservation = db.define('Reservation', {
+const Reservation = db.define('reservation', {
     
     numero_reservation :{
         type: Sequelize.STRING,

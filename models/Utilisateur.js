@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../config/database');
 
 // Création du modèle Utilisateur
-const Utilisateur = db.define('Utilisateur', {
+const Utilisateur = db.define('utilisateur', {
     
     nom_utilisateur :{
         type: Sequelize.STRING,
@@ -23,6 +23,10 @@ const Utilisateur = db.define('Utilisateur', {
     },
     telephone_utilisateur: {
         type: Sequelize.STRING,
+    },
+    role_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false
     }
 });
 
