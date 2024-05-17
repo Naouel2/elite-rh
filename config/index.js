@@ -9,7 +9,7 @@ const Formation = require('../models/Formation');
 // Relations Utilisateur-Roles :
 Utilisateur.hasOne(RoleUtilisateur, { foreignKey: 'role_id' });
 
-// Other relations
+// Reservations relations
 Reservation.belongsTo(Utilisateur, { foreignKey: 'id_utilisateur' });
 Reservation.belongsTo(Formateur, { foreignKey: 'id_formateur' });
 Reservation.belongsTo(Salle, { foreignKey: 'id_salle' });
@@ -19,6 +19,10 @@ Utilisateur.hasMany(Reservation, { foreignKey: 'id_utilisateur' });
 Formateur.hasMany(Reservation, { foreignKey: 'id_formateur' });
 Salle.hasMany(Reservation, { foreignKey: 'id_salle' });
 Formation.hasMany(Reservation, { foreignKey: 'id_formation' });
+
+// Formations-Formateurs relations
+Formateur.belongsToMany(Formation, { through: 'formateur_formations'});
+Formation.belongsToMany(Formateur, { through: 'formateur_formations'});
 
 module.exports = {
     sequelize,

@@ -11,6 +11,10 @@ const Formation = db.define('formation', {
     },
     domaine_formation: {
         type: Sequelize.STRING,
+    },
+    description_formation: {
+        type: Sequelize.TEXT,
+        allowNull: false
     }
    
 });
