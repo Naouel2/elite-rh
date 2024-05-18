@@ -30,11 +30,24 @@ exports.getUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         const { id } = req.params;
+        console.log(req.userData.roles.includes(1))
         if (id != req.userData.id) {
-            return res.status(403).json({ message: 'Access denied' });
+            if (!req.userData.roles.includes(1)) {
+                return res.status(403).json({ message: 'Access denied' });
+            }
         }
+
         const updatedData = req.body;
+
+        // Ensure roles are updated correctly
+        if (updatedData.roles) {
+            await userService.updateUserRoles(id, updatedData.roles);
+            // Remove roles from updatedData to prevent overwriting the user's roles in the user update
+            delete updatedData.roles;
+        }
+
         const updatedUser = await userService.updateUser(id, updatedData);
+
         res.status(200).json({
             message: 'User updated successfully!',
             user: updatedUser

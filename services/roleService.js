@@ -1,34 +1,27 @@
-const RoleUtilisateur = require('../models/RoleUtilisateur');
+const Sequelize = require('sequelize');
+const RoleUtilisateur = require('../config/index').RoleUtilisateur;
 
-// Function to create a role
-async function createRole(roleData) {
-    try {
-        // Create the role in the database
-        const role = await RoleUtilisateur.create(roleData);
-
-        return role;
-    } catch (error) {
-        throw error;
+async function getRoleIdsByNames(roleNames) {
+    if (!Array.isArray(roleNames)) {
+        throw new Error('roleNames must be an array');
     }
+
+    const roles = await RoleUtilisateur.findAll({
+        where: {
+            role: {
+                [Sequelize.Op.in]: roleNames
+            }
+        }
+    });
+
+    if (roles.length !== roleNames.length) {
+        const foundRoleNames = roles.map(role => role.role);
+        const missingRoleNames = roleNames.filter(roleName => !foundRoleNames.includes(roleName));
+        console.error(`One or more roles not found: ${missingRoleNames.join(', ')}`);
+        throw new Error(`One or more roles not found: ${missingRoleNames.join(', ')}`);
+    }
+
+    return roles.map(role => role.id);
 }
 
-// Function to get a role
-async function getRoleIdByName(roleName) {
-    try {
-        // Find the role by name
-        const role = await RoleUtilisateur.findOne({
-            where: { role: roleName },
-
-        });
-
-        return role;
-    } catch (error) {
-        throw error;
-    }
-}
-
-// Export the functions
-module.exports = {
-    createRole,
-    getRole
-};
+module.exports = { getRoleIdsByNames };

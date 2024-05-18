@@ -1,13 +1,15 @@
 const sequelize = require('./database');
 const RoleUtilisateur = require('../models/RoleUtilisateur');
 const Utilisateur = require('../models/Utilisateur');
+const UtilisateurRoleUtilisateur = require('../models/UtilisateurRoleUtilisateur');
 const Formateur = require('../models/Formateur');
 const Reservation = require('../models/Reservation');
 const Salle = require('../models/Salle');
 const Formation = require('../models/Formation');
 
 // Relations Utilisateur-Roles :
-Utilisateur.hasOne(RoleUtilisateur, { foreignKey: 'role_id' });
+Utilisateur.belongsToMany(RoleUtilisateur, { through: UtilisateurRoleUtilisateur});
+RoleUtilisateur.belongsToMany(Utilisateur, {through: UtilisateurRoleUtilisateur});
 
 // Reservations relations
 Reservation.belongsTo(Utilisateur, { foreignKey: 'id_utilisateur' });
@@ -19,10 +21,6 @@ Utilisateur.hasMany(Reservation, { foreignKey: 'id_utilisateur' });
 Formateur.hasMany(Reservation, { foreignKey: 'id_formateur' });
 Salle.hasMany(Reservation, { foreignKey: 'id_salle' });
 Formation.hasMany(Reservation, { foreignKey: 'id_formation' });
-
-// Formations-Formateurs relations
-Formateur.belongsToMany(Formation, { through: 'formateur_formations'});
-Formation.belongsToMany(Formateur, { through: 'formateur_formations'});
 
 module.exports = {
     sequelize,

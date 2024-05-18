@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtOptions = require('../config/jwtOptions').jwtOptions;
-const utilisateurService = require('../services/utilisateurService');
+const utilisateurService = require('./utilisateurService');
+const RoleService = require('./roleService');
 
 async function registerUser(userData) {
     try {
@@ -12,23 +13,20 @@ async function registerUser(userData) {
 
         const hashedPassword = await bcrypt.hash(userData.mdp_utilisateur, 10);
 
-        let roleId;
-        if (userData.role === 'admin') {
-            roleId = 1;
-        } else if (userData.role === 'manager-rh') {
-            roleId = 2;
-        } else {
-            throw new Error('Invalid role specified');
-        }
+        // Obtenir les IDs des rôles à partir de leurs noms
+        const roleIds = await RoleService.getRoleIdsByNames(userData.roles);
+        console.log(roleIds);
 
-        const newUser = await utilisateurService.createUser({
-            nom_utilisateur: userData.nom_utilisateur,
-            prenom_utilisateur: userData.prenom_utilisateur,
-            email_utilisateur: userData.email_utilisateur,
-            mdp_utilisateur: hashedPassword,
-            telephone_utilisateur: userData.telephone_utilisateur,
-            role_id: roleId
-        });
+        const newUser = await utilisateurService.createUserWithRoles(
+            {
+                nom_utilisateur: userData.nom_utilisateur,
+                prenom_utilisateur: userData.prenom_utilisateur,
+                email_utilisateur: userData.email_utilisateur,
+                mdp_utilisateur: hashedPassword,
+                telephone_utilisateur: userData.telephone_utilisateur
+            },
+            roleIds
+        );
 
         return newUser;
     } catch (error) {
@@ -53,7 +51,8 @@ async function logUser(userCredentials) {
         throw new Error('Incorrect password');
     }
 
-    const payload = { id: user.id, email: user.email_utilisateur, role: user.role_id };
+    const userRoles = user.role_utilisateurs.map(role => role.id);
+    const payload = { id: user.id, email: user.email_utilisateur, roles: userRoles};
     const token = jwt.sign(payload, jwtOptions.secretOrKey);
 
     return token;

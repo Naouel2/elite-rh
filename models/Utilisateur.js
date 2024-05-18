@@ -23,12 +23,7 @@ const Utilisateur = db.define('utilisateur', {
     },
     telephone_utilisateur: {
         type: Sequelize.STRING,
-    },
-    role_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
     }
 });
-
 
 module.exports = Utilisateur;
