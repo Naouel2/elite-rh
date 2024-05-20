@@ -5,6 +5,7 @@ const sequelize = require('./config/index').sequelize;
 const checkAuth = require('./middleware/checkAuth');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
+const formationRoutes = require('./routes/formation');
 const passport = require('passport');
 const strategy = require('./config/jwtOptions');
 const bodyParser = require('body-parser');
@@ -35,13 +36,16 @@ sequelize.sync();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// use the strategy (appliquer les restrictions du jeton)
+// use the strategy (token restrictions)
 passport.use("strategy" , strategy);
 
-// Définir les routes non protégées (en étant non connecté)
+// Auth routes
 app.use('/auth', authRoutes);
 
-// you need to be authenticated
+// User routes
 app.use('/users', checkAuth, userRoutes);
+
+// Formation routes
+app.use('/formations', checkAuth, formationRoutes);
 
 module.exports = app;
