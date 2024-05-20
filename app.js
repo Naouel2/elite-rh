@@ -6,6 +6,7 @@ const checkAuth = require('./middleware/checkAuth');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 const formationRoutes = require('./routes/formation');
+const reservationRoutes = require('./routes/reservations');
 const passport = require('passport');
 const strategy = require('./config/jwtOptions');
 const bodyParser = require('body-parser');
@@ -47,5 +48,8 @@ app.use('/users', checkAuth, userRoutes);
 
 // Formation routes
 app.use('/formations', checkAuth, formationRoutes);
+
+// Reservations routes
+app.use('/reservations', checkAuth, reservationRoutes);
 
 module.exports = app;
