@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
 
-// Création du modèle Salle
+// Salle model
 const Salle = db.define('salle', {
 
     nom_salle: {

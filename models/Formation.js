@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
 
-// Création du modèle Formation
+// Formation model
 const Formation = db.define('formation', {
 
     nom_formation: {

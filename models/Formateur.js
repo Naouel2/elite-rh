@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
 
-// Création du modèle Formateur
+// Formateur model
 const Formateur = db.define('formateur', {
 
     nom_formateur: {

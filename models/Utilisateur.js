@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
 
-// Création du modèle Utilisateur
+// Utilisateur model
 const Utilisateur = db.define('utilisateur', {
     
     nom_utilisateur :{

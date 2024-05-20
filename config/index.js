@@ -7,7 +7,7 @@ const Reservation = require('../models/Reservation');
 const Salle = require('../models/Salle');
 const Formation = require('../models/Formation');
 
-// Relations Utilisateur-Roles :
+// Utilisateur-Roles relations
 Utilisateur.belongsToMany(RoleUtilisateur, { through: UtilisateurRoleUtilisateur});
 RoleUtilisateur.belongsToMany(Utilisateur, {through: UtilisateurRoleUtilisateur});
 

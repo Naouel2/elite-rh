@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
 
-// Création du modèle Réservation
+// Réservation model
 const Reservation = db.define('reservation', {
     
     numero_reservation :{
