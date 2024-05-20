@@ -1,7 +1,10 @@
+const orderid = require('order-id')('key');
 const { Reservation, Utilisateur, Formateur, Salle, Formation } = require('../config/index');
 
 exports.createReservation = async (reservationData) => {
     try {
+        const reservationId = orderid.generate();
+        reservationData.numero_reservation = reservationId;
         const newReservation = await Reservation.create(reservationData);
         return newReservation;
     } catch (error) {
