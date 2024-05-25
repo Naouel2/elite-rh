@@ -11,12 +11,18 @@ async function registerUser(userData) {
             throw new Error('Email already exists');
         }
 
-        const hashedPassword = await bcrypt.hash(userData.mdp_utilisateur, 10);
+        let userPassword;
+        if (!userData.mdp_utilisateur) {
+            userPassword = 'password123';
+        } else {
+            userPassword = userData.mdp_utilisateur;
+        }
+
+        const hashedPassword = await bcrypt.hash(userPassword, 10);
 
         // Obtenir les IDs des rôles à partir de leurs noms
         const roleIds = await RoleService.getRoleIdsByNames(userData.roles);
-        console.log(roleIds);
-
+        
         const newUser = await utilisateurService.createUserWithRoles(
             {
                 nom_utilisateur: userData.nom_utilisateur,
@@ -50,12 +56,15 @@ async function logUser(userCredentials) {
     if (!isMatch) {
         throw new Error('Incorrect password');
     }
-
     const userRoles = user.role_utilisateurs.map(role => role.id);
     const payload = { id: user.id, email: user.email_utilisateur, roles: userRoles};
     const token = jwt.sign(payload, jwtOptions.secretOrKey);
 
-    return token;
+    return {
+        token, 
+        userId: user.id,
+        roles: userRoles
+    };
 }
 
 module.exports = {

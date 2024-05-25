@@ -14,7 +14,8 @@ async function getAllUsers() {
             'telephone_utilisateur',
             'createdAt',
             'updatedAt'
-        ]       
+        ],
+        include: RoleUtilisateur     
     });
 }
 

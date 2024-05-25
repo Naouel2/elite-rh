@@ -5,8 +5,11 @@ const sequelize = require('./config/index').sequelize;
 const checkAuth = require('./middleware/checkAuth');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
+const roleRoutes = require('./routes/roles');
 const formationRoutes = require('./routes/formation');
+const formateurRoutes = require('./routes/formateurs');
 const reservationRoutes = require('./routes/reservations');
+const salleRoutes = require('./routes/salles');
 const passport = require('passport');
 const strategy = require('./config/jwtOptions');
 const bodyParser = require('body-parser');
@@ -49,7 +52,17 @@ app.use('/users', checkAuth, userRoutes);
 // Formation routes
 app.use('/formations', checkAuth, formationRoutes);
 
+// Formateurs routes
+app.use('/formateurs', checkAuth, formateurRoutes);
+
 // Reservations routes
 app.use('/reservations', checkAuth, reservationRoutes);
+
+// Roles routes
+app.use('/roles', checkAuth, roleRoutes);
+
+// Salles routes
+app.use('/salles', checkAuth, salleRoutes);
+
 
 module.exports = app;

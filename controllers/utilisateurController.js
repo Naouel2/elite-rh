@@ -30,7 +30,6 @@ exports.getUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        console.log(req.userData.roles.includes(1))
         if (id != req.userData.id) {
             if (!req.userData.roles.includes(1)) {
                 return res.status(403).json({ message: 'Access denied' });

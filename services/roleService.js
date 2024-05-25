@@ -1,6 +1,11 @@
 const Sequelize = require('sequelize');
 const RoleUtilisateur = require('../config/index').RoleUtilisateur;
 
+async function getAllRoles() {
+    const roles = await RoleUtilisateur.findAll();
+    return roles;
+}
+
 async function getRoleIdsByNames(roleNames) {
     if (!Array.isArray(roleNames)) {
         throw new Error('roleNames must be an array');
@@ -24,4 +29,7 @@ async function getRoleIdsByNames(roleNames) {
     return roles.map(role => role.id);
 }
 
-module.exports = { getRoleIdsByNames };
+module.exports = { 
+    getAllRoles,
+    getRoleIdsByNames 
+};

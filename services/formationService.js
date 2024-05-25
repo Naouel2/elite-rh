@@ -13,7 +13,9 @@ async function createFormation(formationData) {
 // Get all formations
 async function getAllFormations() {
     try {
-        const formations = await Formation.findAll();
+        const formations = await Formation.findAll({
+            include: {all: true}
+        });
         return formations;
     } catch (error) {
         throw error;
@@ -23,7 +25,9 @@ async function getAllFormations() {
 // Get a single formation by ID
 async function getFormationById(id) {
     try {
-        const formation = await Formation.findByPk(id);
+        const formation = await Formation.findByPk(id, {
+            include: {all: true}
+        });
         return formation;
     } catch (error) {
         throw error;
@@ -52,6 +56,7 @@ async function deleteFormation(id) {
         const deleted = await Formation.destroy({
             where: { id: id }
         });
+        // todo : remove reservations for this formation in the reservations table
         return deleted;
     } catch (error) {
         throw error;

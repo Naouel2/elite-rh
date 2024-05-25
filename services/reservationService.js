@@ -14,14 +14,24 @@ exports.createReservation = async (reservationData) => {
 
 exports.getAllReservations = async () => {
     try {
-        const reservations = await Reservation.findAll({
-            include: [
-                { model: Utilisateur, as: 'utilisateur' },
-                { model: Formateur, as: 'formateur' },
-                { model: Salle, as: 'salle' },
-                { model: Formation, as: 'formation' }
-            ]
-        });
+        const reservations = await Reservation.findAll(
+            {
+                include: [
+                    { 
+                        model: Formation, 
+                        as: 'formation',
+                        include: [{
+                            model: Salle,
+                            as: 'salle'
+                        }]
+                    },
+                    { 
+                        model: Utilisateur, 
+                        as: 'utilisateur',
+                    }
+                ]
+            }
+        );
         return reservations;
     } catch (error) {
         throw error;
@@ -49,9 +59,14 @@ exports.getReservationsByUser = async (userId) => {
         const reservations = await Reservation.findAll({
             where: { id_utilisateur: userId },
             include: [
-                { model: Formateur, as: 'formateur' },
-                { model: Salle, as: 'salle' },
-                { model: Formation, as: 'formation' }
+                { 
+                    model: Formation, 
+                    as: 'formation',
+                    include: [{
+                        model: Salle,
+                        as: 'salle'
+                    }]
+                }
             ]
         });
         return reservations;
@@ -76,7 +91,6 @@ exports.updateReservation = async (id, updatedData) => {
                 updatedFields[key] = updatedData[key];
             }
         }
-        console.log(updatedFields);
 
         await Reservation.update(updatedFields, { where: { id: id } });
         const updatedReservation = await Reservation.findByPk(id);
