@@ -1,19 +1,14 @@
 const express = require('express');
-const router = express.Router();
-const User = require('../models/User');
+const userRoutes = express.Router();
+const checkRole = require('../middleware/checkRole');
+const userController = require('../controllers/utilisateurController');
 
-const getAllUsers = async () => {
-    return await User.findAll();
-};
+// Routes for all
+userRoutes.get('/:id', checkRole([1, 2]), userController.getUser);
+userRoutes.put('/:id', checkRole([1, 2]), userController.updateUser);
 
+// Admin routes
+userRoutes.get('/', checkRole([1]), userController.getAllUsers);
+userRoutes.delete('/:id', checkRole([1]), userController.deleteUser);
 
-
-router.get('/', function(req, res) {
-    getAllUsers().then(user => res.json(user));
-});
-
-
-
-module.exports = router;
-
-
+module.exports = userRoutes;

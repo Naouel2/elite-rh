@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize');
 
-// configure this with your own parameters
-const database = new Sequelize({
-    database: 'ska_sequelize',
-    username: 'root',
-    password: '',
-    dialect: 'mysql',
+require('dotenv').config()
+
+const database = new Sequelize(process.env.DB_URL, {
+  dialect: 'mysql',
+  dialectModule: require('mysql2')
 });
 
 module.exports = database;
+

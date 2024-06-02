@@ -17,6 +17,4 @@ let strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
     }
 });
 
-
-
 module.exports = {jwtOptions , ExtractJwt , JwtStrategy, strategy };
