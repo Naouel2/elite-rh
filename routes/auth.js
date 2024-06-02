@@ -9,6 +9,6 @@ const authRoutes = express.Router();
 authRoutes.post('/login', authController.logUser);
 
 // Register a new user POST /register
-authRoutes.post('/register', checkAuth, checkRole([1]), authController.createUser);
+authRoutes.post('/register', authController.createUser);
 
 module.exports = authRoutes;

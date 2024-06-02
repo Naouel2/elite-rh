@@ -3,7 +3,7 @@ const router = express.Router();
 const checkRole = require('../middleware/checkRole');
 const reservationController = require('../controllers/reservationController');
 
-// Create reservation
+// Create reservation (avec MiddleWare)
 router.post('/', checkRole([1, 2]), reservationController.createReservation);
 
 // Get all reservations
